@@ -91,6 +91,15 @@ Now, we should have a production environment, so we can make a host group!
 4. Name your group 'Common' and set Environment to 'production'
 5. Click submit!
 
+Now that we have the group, let's assign it some classes.
+
+1. Click "Common" in the host group list
+1. Click "Puppet Classes"
+  * Here we can see a list of puppet classes in the control repo.
+    Typically, we add "role" classes which pass off responsibility to a number of "profiles"
+    These can be seen in `site/profile/manifests` and `site/role/manifests`.
+1. Add the `role::server` class to `Common` and click submit!
+
 ## Registering an agent
 
 Now that we have a host group and environment, let's try and make a new host!
