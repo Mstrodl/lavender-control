@@ -175,6 +175,43 @@ ssh::keys:
 The important bit here is the `ssh::keys` key.
 Its value overrides the `keys` parameter of the `ssh` class.
 
+## Testing new changes
+
+Because r10k uses git branches as puppet environments, we can pretty easily test
+our changes without breaking production!
+
+1. Make a new git branch:
+```bash
+git checkout -b newfeature
+```
+2. Then, make your changes...
+3. Push your changes:
+```bash
+git push -u origin newfeature
+```
+4. Update environments on foreman: Head to Hosts > Environments and click import environments
+5. Go to Hosts and click the host you want to assign
+6. Click Edit
+7. Change the environment to `newfeature`
+8. Click submit
+9. Run `puppet agent -t` on the machine you updated
+10. Make sure nothing breaks
+11. Merge your changes back:
+```
+git checkout production
+git merge newfeature
+git push -u origin production
+```
+12. Unset the environment override on the host
+13. Remove the old branches:
+```
+git branch -d newfeature
+git push origin --delete newfeature
+```
+14. Update environments in foreman
+
+Quite honestly though, usually I just push to `production` and revert if necessary.
+
 ## Troubleshooting
 
 ### Puppet executable not found :(
