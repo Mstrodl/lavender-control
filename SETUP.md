@@ -101,10 +101,10 @@ Now, we should have a production environment, so we can make a host group!
 Now that we have the group, let's assign it some classes.
 
 1. Click "Common" in the host group list
-1. Click "Puppet Classes"
-  * Here we can see a list of puppet classes in the control repo.
-    Typically, we add "role" classes which pass off responsibility to a number of "profiles"
-    These can be seen in `site/profile/manifests` and `site/role/manifests`.
+1. Click "Puppet Classes".
+Here we can see a list of puppet classes in the control repo.
+Typically, we add "role" classes which pass off responsibility to a number of "profiles"
+These can be seen in `site/profile/manifests` and `site/role/manifests`.
 1. Add the `role::server` class to `Common` and click submit!
 
 ## Registering an agent
@@ -116,28 +116,28 @@ Now that we have a host group and environment, let's try and make a new host!
 wget https://apt.puppetlabs.com/puppet6-release-bullseye.deb
 dpkg -i puppet6-release-bullseye.deb
 ```
-1. Install the agent
+2. Install the agent
 ```bash
 apt update
 apt install puppet-agent
 ```
-1. Tell puppet where to look for catalogs.
+3. Tell puppet where to look for catalogs.
 Add the following to `/etc/puppetlabs/puppet/puppet.conf`:
 ```ini
 [agent]
     server = your-puppet-master.example.org
 ```
-1. Run the agent
+4. Run the agent
 ```bash
 puppet agent -t
 ```
-1. You'll probably get an error message from the puppet agent because the certificate
+5. You'll probably get an error message from the puppet agent because the certificate
 isn't signed by the Puppet CA. To fix this, we need to sign the certificate on
 the puppet master to show the host is authorized to pull configurations:
 ```bash
 puppetserver ca sign --certname puppet-node01.example.org
 ```
-1. Run the agent again, this time it should succeed!
+6. Run the agent again, this time it should succeed!
 ```bash
 puppet agent -t
 ```
