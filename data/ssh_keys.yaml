@@ -1,0 +1,26 @@
+ssh::keys:
+  # Mary Strodl <mstrodl@csh.rit.edu>
+
+  mstrodl_twinkpad_legacy:
+    ensure: present
+    user: root
+    type: rsa
+    key: AAAAB3NzaC1yc2EAAAADAQABAAACAQCn3E2XWjoxOVoXA7DDm8M+toNBX351onJmd2llhSMwk7LWoA7acBvfXx5jpAwKO8Q5s7gNGMYVm3fAIyTfLXs4VHc++OWRUk+nNYVJwQUQD/S1/AyjE5zOuffjSVIH5ca7vFJYmIlSKJaXGTSxJ/o1OxenUjgQIMCwYcaExlff0S6r46fXbniQnR+hgg9DXWXsMhYzut6AyMw9ZMn2T5saesobIdl6Zd+fnkF59aEbuPHSLd0ttoJbAzubnW9mCMtbBsLIV7KQD1PdHoVjJp9TsXtAlLb32Y77pwlUfYx0nsR9GjV2gNl/d956H8h32ADGiANbpgP/PsXJl5OeomcayM4LqaSt22XdUJOVimUc+/pVMNbSh2hvnjRg81FkGcauSbKmeHx6IK/aeHrF0bOOeM9ttV4qZ6IuCECAK/uSxlEXEpQArnCAquuUTAcMTBpF3uSEuRyandDIblwfIAaMRzp+/HZJThfxHinSEIfNfYPy8m46m07ziVYqt7NvHJrP/Qp/0tWnY0tDF0A79ORmpYXRUAt1iOw9u7MQCn4PqOFbkthXQR49R4k1f2HDPtbs7I4L6aW1NwvOBalfl50nyf4aA39xugLcqHGPaT0p2fhKJaTB1jMSdcoJsa/OmDSzGaTEeBpToiJVNyxKfSjYXWLqD02TNDezrIZESJsdsw==
+
+  mstrodl_somu:
+    ensure: present
+    user: root
+    type: sk-ssh-ed25519@openssh.com
+    key: AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIM3ynN1oxz1X05zmLC/xgrV+mefXf5+loQ9emk3ttDuwAAAABHNzaDo=
+
+  mstrodl_pinktap:
+    ensure: present
+    user: root
+    type: sk-ecdsa-sha2-nistp256@openssh.com
+    key: AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBBo+TI4QBqEjdWWw2FuMNL5nHg0kr84K5lSLj7wC7g1Ww8MU4jSVfyvpkI/czVB6F6obuQCrHVRr7+bC17a3f8UAAAAEc3NoOg==
+
+  mstrodl_lavender:
+    ensure: present
+    user: root
+    type: ed25519
+    key: AAAAC3NzaC1lZDI1NTE5AAAAIMZl5jGSzbYlcLIoeYL+Jg8LAdsqfPzavwpOfNbfaUbn

@@ -27,7 +27,7 @@ We should have a working puppet server, let's try this out!
 To test, let's try and do a puppet run on the master:
 
 ```bash
-/opt/puppetlabs/bin/puppet agent -t
+puppet agent -t
 ```
 
 If everything went well, you should see a `Notice: Applied catalog in X.XX seconds`
@@ -57,34 +57,20 @@ I only really found these resources:
 * https://puppet.com/docs/pe/2019.8/set-up-r10k.html
 * https://github.com/puppetlabs/r10k
 
-The latter was useful, though!
-
-I ran:
-
-```bash
-/opt/puppetlabs/puppet/bin/gem install r10k
-```
-
-to get a copy of r10k for our use
-
-Now, we can configure the r10k stuff to know where our repository is stored:
-
-```yaml
-# /etc/puppetlabs/r10k/r10k.yaml
----
-:cachedir: /opt/puppetlabs/puppet/cache/r10k
-:sources:
-  puppet:
-    basedir: /etc/puppetlabs/code/environments
-    remote: https://github.com/mstrodl/lavender-control.git
-
-```
+I created a `configure_r10k.pp` file in this repository to install r10k and
+set up a webhook to pull down new changes automatically.
+To run it, use the `configure_r10k.sh` helper script.
 
 To verify it works, let's try and pull down the environment with r10k:
 
 ```bash
-/opt/puppetlabs/puppet/bin/r10k deploy environment -p
+r10k deploy environment -p
 ```
+
+Now that this is done, you can set up a git webhook which POSTs to
+`http://your-puppet-master.example.org:8088/payload`
+for your control repo. Now every time you push changes to git, r10k
+will automatically be deployed!
 
 ## Tell foreman!
 
@@ -104,6 +90,8 @@ Now, we should have a production environment, so we can make a host group!
 3. Click create
 4. Name your group 'Common' and set Environment to 'production'
 5. Click submit!
+
+## Registering an agent
 
 Now that we have a host group and environment, let's try and make a new host!
 
@@ -131,9 +119,15 @@ Add the following to `/etc/puppetlabs/puppet/puppet.conf`:
 isn't signed by the Puppet CA. To fix this, we need to sign the certificate on
 the puppet master to show the host is authorized to pull configurations:
 ```
-/opt/puppetlabs/bin/puppetserver ca sign --certname puppet-node01.csh.rit.edu
+puppetserver ca sign --certname puppet-node01.csh.rit.edu
 ```
 1. Run the agent again, this time it should succeed!
 ```
-/opt/puppetlabs/puppet/bin/puppet agent -t
+puppet agent -t
 ```
+
+## Now what? Setting up SSH keys
+
+I've already gone through much of the setup here, but if you check
+`data/ssh_keys.yaml` you can see how useful puppet can be, particularly
+with a larger team like opcomm!
