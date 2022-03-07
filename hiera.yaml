@@ -1,0 +1,31 @@
+version: 5
+defaults:
+  datadir: data
+  data_hash: yaml_data
+hierarchy:
+  - name: "Secret data: per-node, per-location, per-group, common"
+    lookup_key: eyaml_lookup_key
+    paths:
+      - "secrets/nodes/%{trusted.certname}.eyaml"
+      - "secrets/location/%{::location}/%{::group}.eyaml"
+      - "secrets/location/%{::location}/common.eyaml"
+      - "secrets/groups/%{::group}/%{::subgroup}.eyaml"
+      - "secrets/groups/%{::group}.eyaml"
+      - "secrets/common.eyaml"
+    options:
+      pkcs7_private_key: /etc/puppetlabs/puppet/eyaml/private_key.pkcs7.pem
+      pkcs7_public_key:  /etc/puppetlabs/puppet/eyaml/public_key.pkcs7.pem
+
+  - name: "Per-node data (yaml version)"
+    path: "nodes/%{trusted.certname}.yaml" # Add file extension
+    # Omitting datadir and data_hash to use defaults.
+
+  - name: "Other YAML hierarchy levels"
+    paths: # Can specify an array of paths instead of a single one.
+      - "location/%{::location}/%{::group}.yaml"
+      - "location/%{::location}/common.yaml"
+      - "groups/%{::group}/%{::subgroup}.yaml"
+      - "groups/%{::group}.yaml"
+      - "os/%{::osfamily}.yaml"
+      - "common.yaml"
+      - "ssh_keys.yaml"

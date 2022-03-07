@@ -50,3 +50,47 @@ To verify it works, let's try and pull down the environment with r10k:
 ```bash
 /opt/puppetlabs/puppet/bin/r10k deploy environment -p
 ```
+
+## Tell foreman!
+
+Hopefully that worked. Head to your foreman site and click:
+`Import environments from ...`
+
+Click 'All' and submit the form. This will pull down our new environment
+changes so foreman can see them in the UI. This isn't always necessary, it
+should only be needed when you create a new environment you want to manually
+assign to a host in the foreman web UI or if you need to assign new classes to a group.
+Puppet itself can always see the stuff tracked in git.
+
+Now, we should have a production environment, so we can make a host group!
+
+1. Head to the Foreman web console
+2. Go to Configure > Host Groups
+3. Click create
+4. Name your group 'Common' and set Environment to 'production'
+5. Click submit!
+
+Now that we have a host group and environment, let's try and make a new host!
+
+1. Grab the repos
+```
+wget https://apt.puppetlabs.com/puppet6-release-bullseye.deb
+dpkg -i puppet6-release-bullseye.deb
+```
+2. Install the agent
+```
+apt update
+apt install puppet-agent
+```
+3. Run the agent
+```
+/opt/puppetlabs/puppet/bin/puppet agent -t
+```
+4. Sign the certificate (from the puppet master)
+```
+/opt/puppetlabs/bin/puppetserver ca sign --certname puppet-node01.csh.rit.edu
+```
+5. Run the agent again
+```
+/opt/puppetlabs/puppet/bin/puppet agent -t
+```

@@ -1,0 +1,3 @@
+profile::base::ntp_servers:
+- pool.0.us.ntp.org
+- pool.1.us.ntp.org
