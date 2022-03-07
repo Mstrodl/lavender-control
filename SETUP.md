@@ -33,6 +33,13 @@ puppet agent -t
 If everything went well, you should see a `Notice: Applied catalog in X.XX seconds`
 message in the output!
 
+Now, foreman should be accessible at `https://puppet-master.example.org`.
+If it's not, make sure the `apache2` configs got applied:
+
+```
+systemctl restart apache2
+```
+
 ## Control setup
 
 Let's make a repo to store our code! R10K uses branch names as puppet environments,
@@ -122,13 +129,13 @@ Add the following to `/etc/puppetlabs/puppet/puppet.conf`:
 ```
 1. Run the agent
 ```
-/opt/puppetlabs/puppet/bin/puppet agent -t
+puppet agent -t
 ```
 1. You'll probably get an error message from the puppet agent because the certificate
 isn't signed by the Puppet CA. To fix this, we need to sign the certificate on
 the puppet master to show the host is authorized to pull configurations:
 ```
-puppetserver ca sign --certname puppet-node01.csh.rit.edu
+puppetserver ca sign --certname puppet-node01.example.org
 ```
 1. Run the agent again, this time it should succeed!
 ```
@@ -140,3 +147,25 @@ puppet agent -t
 I've already gone through much of the setup here, but if you check
 `data/ssh_keys.yaml` you can see how useful puppet can be, particularly
 with a larger team like opcomm!
+
+## Troubleshooting
+
+### Puppet executable not found :(
+
+You probably need to restart your shell or `source /etc/profile`!
+
+That failing, you can manually add `/opt/puppetlabs/bin` to your `PATH`!
+
+### I messed up and now there's two certificates for my agent!
+
+Easy. Nuke it!
+On the server run:
+```
+puppetserver ca clean --certname puppet-node01.example.org
+```
+
+On the agent run:
+```
+find /etc/puppetlabs/puppet/ssl -name puppet-node01.example.org.pem -delete
+find /var/lib/puppet/ssl -name puppet-node01.example.org.pem -delete
+```
