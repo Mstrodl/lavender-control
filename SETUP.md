@@ -36,7 +36,7 @@ message in the output!
 Now, foreman should be accessible at `https://puppet-master.example.org`.
 If it's not, make sure the `apache2` configs got applied:
 
-```
+```bash
 systemctl restart apache2
 ```
 
@@ -112,12 +112,12 @@ Now that we have the group, let's assign it some classes.
 Now that we have a host group and environment, let's try and make a new host!
 
 1. Grab the repos
-```
+```bash
 wget https://apt.puppetlabs.com/puppet6-release-bullseye.deb
 dpkg -i puppet6-release-bullseye.deb
 ```
 1. Install the agent
-```
+```bash
 apt update
 apt install puppet-agent
 ```
@@ -128,17 +128,17 @@ Add the following to `/etc/puppetlabs/puppet/puppet.conf`:
     server = your-puppet-master.example.org
 ```
 1. Run the agent
-```
+```bash
 puppet agent -t
 ```
 1. You'll probably get an error message from the puppet agent because the certificate
 isn't signed by the Puppet CA. To fix this, we need to sign the certificate on
 the puppet master to show the host is authorized to pull configurations:
-```
+```bash
 puppetserver ca sign --certname puppet-node01.example.org
 ```
 1. Run the agent again, this time it should succeed!
-```
+```bash
 puppet agent -t
 ```
 
@@ -160,12 +160,12 @@ That failing, you can manually add `/opt/puppetlabs/bin` to your `PATH`!
 
 Easy. Nuke it!
 On the server run:
-```
+```bash
 puppetserver ca clean --certname puppet-node01.example.org
 ```
 
 On the agent run:
-```
+```bash
 find /etc/puppetlabs/puppet/ssl -name puppet-node01.example.org.pem -delete
 find /var/lib/puppet/ssl -name puppet-node01.example.org.pem -delete
 ```
