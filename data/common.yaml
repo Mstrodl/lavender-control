@@ -1,3 +1,8 @@
 profile::base::ntp_servers:
 - pool.0.us.ntp.org
 - pool.1.us.ntp.org
+
+# Match puppet agent version to server!
+puppet_agent::package_version: 'auto'
+puppet_agent::collection: 'puppet6'
+puppet_agent::manage_repo: true

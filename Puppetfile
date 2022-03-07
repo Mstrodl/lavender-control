@@ -10,3 +10,5 @@ mod 'puppetlabs/sshkeys_core', '2.3.0'
 # Manage SSH
 mod 'ssh',
   :git => 'https://github.com/ComputerScienceHouse/puppet-module-ssh'
+
+mod 'puppetlabs-puppet_agent', '4.10.0'

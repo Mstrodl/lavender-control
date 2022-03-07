@@ -148,6 +148,33 @@ I've already gone through much of the setup here, but if you check
 `data/ssh_keys.yaml` you can see how useful puppet can be, particularly
 with a larger team like opcomm!
 
+### How does it work though?
+
+First, `site/role/manifests/server.pp` gets loaded by hosts in the `Common` host group.
+This manifest loads the `base` and `ssh` profiles.
+
+The `base` profile sets up NTP and the `ssh` profile includes the `ssh` module
+we pull from puppet forge (described in `Puppetfile`). The `ssh` class gets it's
+configuration from `data/ssh_keys.yaml`. Don't get tripped up on the name of the file,
+the contents are the important part:
+
+```yaml
+ssh::keys:
+  mstrodl_somu:
+    ensure: present
+    user: root
+    type: sk-ssh-ed25519@openssh.com
+    key: AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIM3ynN1oxz1X05zmLC/xgrV+mefXf5+loQ9emk3ttDuwAAAABHNzaDo=
+  mstrodl_lavender:
+    ensure: present
+    user: root
+    type: ed25519
+    key: AAAAC3NzaC1lZDI1NTE5AAAAIMZl5jGSzbYlcLIoeYL+Jg8LAdsqfPzavwpOfNbfaUbn
+```
+
+The important bit here is the `ssh::keys` key.
+Its value overrides the `keys` parameter of the `ssh` class.
+
 ## Troubleshooting
 
 ### Puppet executable not found :(
