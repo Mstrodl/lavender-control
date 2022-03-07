@@ -12,3 +12,4 @@ mod 'ssh',
   :git => 'https://github.com/ComputerScienceHouse/puppet-module-ssh'
 
 mod 'puppetlabs-puppet_agent', '4.10.0'
+mod 'puppetlabs-inifile', '5.2.0'
