@@ -1,25 +1,59 @@
 # Lavender Puppet
 
-## Control setup
+## First off, what's Puppet!
 
-Let's make a repo to store our code!
+Puppet is a cool piece of software! It lets you declare the desired state of your
+infrastructure with code and uses a pull configuration to bring your infrastructure
+from it's current state to the desired state described in your puppet files.
 
-R10K uses branch names as puppet environments, so we'll need to rename
-our branch to match the default puppet environment:
+This guide will help you get set up with [Foreman](https://theforeman.org),
+[r10k](https://github.com/puppetlabs/r10k), and
+[hiera](https://puppet.com/docs/puppet/7/hiera_intro.html) to make a flexible
+puppet master!
+
+## Foreman setup
+
+We'll use foreman to manage our infrastructure. Foreman is just a pretty
+web console where you can get a quick idea of the state of your infrastructure
+and also makes changing parameters for testing or whatever super painless.
+
+To setup foreman, I mostly just followed the
+[quickstart installation guide](https://www.theforeman.org/manuals/2.5/index.html#2.1Installation)
+from the foreman manual. I'll be using Foreman 2.5 with a Debian 10 master.
+
+Foreman is cool, because it actually puppetizes the master as well as any clients.
+
+We should have a working puppet server, let's try this out!
+To test, let's try and do a puppet run on the master:
 
 ```bash
-git branch -m master production # Rename master to production
+/opt/puppetlabs/bin/puppet agent -t
 ```
 
-Now, you can follow
+If everything went well, you should see a `Notice: Applied catalog in X.XX seconds`
+message in the output!
+
+## Control setup
+
+Let's make a repo to store our code! R10K uses branch names as puppet environments,
+so we'll need to name our branch to match the default puppet environment:
+
+```bash
+git init -b production # production is default environment for puppet
+```
+
+Now, copy the files from this repo into yours. Most of it's just boilerplate.
+
+Alternatively, you can follow
 [the quickstart steps](https://github.com/puppetlabs/r10k/blob/29204764d7aa824801690ea388d7065a2b32e391/doc/dynamic-environments/quickstart.mkd#configure-puppet-code-repository)
-provided by r10k!
+provided by r10k, although I had very little luck with getting them working...
 
 ## R10K setup
 
 This repo is nice and all, but what if we could automagically pull in our changes?
 
 I only really found these resources:
+
 * https://puppet.com/docs/pe/2019.8/set-up-r10k.html
 * https://github.com/puppetlabs/r10k
 
@@ -43,6 +77,7 @@ Now, we can configure the r10k stuff to know where our repository is stored:
   puppet:
     basedir: /etc/puppetlabs/code/environments
     remote: https://github.com/mstrodl/lavender-control.git
+
 ```
 
 To verify it works, let's try and pull down the environment with r10k:
@@ -77,20 +112,28 @@ Now that we have a host group and environment, let's try and make a new host!
 wget https://apt.puppetlabs.com/puppet6-release-bullseye.deb
 dpkg -i puppet6-release-bullseye.deb
 ```
-2. Install the agent
+1. Install the agent
 ```
 apt update
 apt install puppet-agent
 ```
-3. Run the agent
+1. Tell puppet where to look for catalogs.
+Add the following to `/etc/puppetlabs/puppet/puppet.conf`:
+```ini
+[agent]
+    server = your-puppet-master.example.org
+```
+1. Run the agent
 ```
 /opt/puppetlabs/puppet/bin/puppet agent -t
 ```
-4. Sign the certificate (from the puppet master)
+1. You'll probably get an error message from the puppet agent because the certificate
+isn't signed by the Puppet CA. To fix this, we need to sign the certificate on
+the puppet master to show the host is authorized to pull configurations:
 ```
 /opt/puppetlabs/bin/puppetserver ca sign --certname puppet-node01.csh.rit.edu
 ```
-5. Run the agent again
+1. Run the agent again, this time it should succeed!
 ```
 /opt/puppetlabs/puppet/bin/puppet agent -t
 ```
