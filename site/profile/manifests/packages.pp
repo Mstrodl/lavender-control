@@ -25,18 +25,16 @@ class profile::packages {
     pacman::key { 'aur_coolmathgames_tech':
       keyid  => '0x4338A0E98FE8718EA718126FD8A8A0C4D0CE4C1E',
       source => 'puppet:///files/aur.coolmathgames.tech.asc',
-    }
-    pacman::repo { 'aur_coolmathgames_tech':
+    } -> pacman::repo { 'aur_coolmathgames_tech':
       siglevel => 'required',
       server => 'https://aur.coolmathgames.tech',
       order => '99',
-      require => Class['pacman::key', 'aur_coolmathgames_tech'],
     }
 
     # Aur packages:
     package { 'saldl-git':
       ensure => latest,
-      require => Class['pacman::repo', 'aur_coolmathgames_tech'],
+      require => Class['pacman::repo']['aur_coolmathgames_tech'],
     }
   }
 }
