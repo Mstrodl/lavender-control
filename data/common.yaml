@@ -21,3 +21,5 @@ profile::development_tools::eyaml_public_key: <
   yZNIbEo3S3Z5BHMy+nx6VFwdcsK+G1wCCUl1O7Rfrc3zIiRL3PkNDeQTtJmN+vfm
   gUzBFUi0Pd6ZR4HBUQ==
   -----END CERTIFICATE-----
+
+pacman::paralleldownloads: 15
