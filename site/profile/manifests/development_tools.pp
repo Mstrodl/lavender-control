@@ -45,6 +45,6 @@ class profile::development_tools(
 
   file { '/home/mary/.eyaml/config.yaml':
     ensure => present,
-    source => $eyaml_public_key,
+    content => $eyaml_public_key,
   }
 }
