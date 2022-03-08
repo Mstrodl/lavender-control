@@ -43,7 +43,9 @@ class profile::development_tools(
     }
   }
 
-  file { '/home/mary/.eyaml/config.yaml':
+  file { '/home/mary/.eyaml':
+    ensure => directory,
+  } -> file { '/home/mary/.eyaml/config.yaml':
     ensure => present,
     content => $eyaml_public_key,
   }
