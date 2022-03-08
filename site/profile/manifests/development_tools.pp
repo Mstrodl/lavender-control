@@ -34,6 +34,6 @@ class profile::development_tools(
 
   file { '/home/mary/.eyaml/config.yaml':
     ensure => present,
-    source => "puppet:///public_key.pkcs7.pem",
+    source => "puppet:///modules/public_key.pkcs7.pem",
   }
 }
