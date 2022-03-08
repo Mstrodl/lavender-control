@@ -30,7 +30,7 @@ class profile::packages {
       siglevel => 'required',
       server => 'https://aur.coolmathgames.tech',
       order => '99',
-      requires => pacman::key['aur.coolmathgames.tech'],
+      requires => Class['pacman::key', 'aur.coolmathgames.tech'],
     }
 
     # Aur packages:
