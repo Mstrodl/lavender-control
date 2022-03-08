@@ -1,6 +1,8 @@
 # Basic packages for development use
 
-class profile::packages {
+class profile::packages(
+  String $aur_gpg,
+) {
   package { 'neovim':
     ensure => latest,
   }

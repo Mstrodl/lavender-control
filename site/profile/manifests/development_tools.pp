@@ -1,5 +1,6 @@
 class profile::development_tools(
-  String $wakatime_config
+  String $wakatime_config,
+  String $eyaml_public_key,
 ) {
   vcsrepo { '/home/mary/.emacs.d':
     ensure => latest,
@@ -44,6 +45,6 @@ class profile::development_tools(
 
   file { '/home/mary/.eyaml/config.yaml':
     ensure => present,
-    source => "puppet:///modules/public_key.pkcs7.pem",
+    source => $eyaml_public_key,
   }
 }
