@@ -21,7 +21,7 @@ class profile::development_tools(
   if $::facts['os']['family'] == 'Archlinux' {
     package { 'wakatime-cli-bin':
       ensure => latest,
-      requires => Class['pacman::repo', 'aur_coolmathgames_tech'],
+      require => Class['pacman::repo', 'aur_coolmathgames_tech'],
     }
     file { '/home/mary/.wakatime.cfg':
       ensure => present,
