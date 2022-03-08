@@ -1,6 +1,16 @@
 class profile::development_tools(
   String $wakatime_config
 ) {
+  vcsrepo { '/home/mary/.emacs.d':
+    ensure => latest,
+    provider => git,
+    origin => 'origin_https',
+    revision => 'master',
+    source => {
+      'origin_https' => 'https://github.com/Mstrodl/.emacs.d.git',
+      'origin' => 'git@github.com/Mstrodl/.emacs.d.git',
+    },
+  }
   package { 'emacs':
     ensure => latest,
   }
