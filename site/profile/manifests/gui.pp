@@ -17,4 +17,7 @@ class profile::gui {
   package { 'gimp':
     ensure => latest,
   }
+  package { 'oneko':
+    ensure => latest,
+  }
 }
