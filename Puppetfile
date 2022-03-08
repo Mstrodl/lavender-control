@@ -23,3 +23,9 @@ mod 'puppetlabs/sshkeys_core', '2.3.0'
 # Manage SSH
 mod 'ssh',
   :git => 'https://github.com/ComputerScienceHouse/puppet-module-ssh'
+
+# Install nodejs
+mod 'puppet-nodejs', '9.0.1'
+
+# Manage repos
+mod 'aboe-pacman', '0.6.0'
