@@ -23,3 +23,5 @@ profile::development_tools::eyaml_public_key: <
   -----END CERTIFICATE-----
 
 pacman::paralleldownloads: 15
+profile::ssh::users:
+  - root

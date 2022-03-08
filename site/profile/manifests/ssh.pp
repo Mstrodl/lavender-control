@@ -1,33 +1,29 @@
 class profile::ssh(
   Hash[String, Hash[String, String]] $keys,
+  Array[String] $users = ['root'],
 ) {
-  $keys_new = ['root', 'mary'].reduce |$memo, $username| {
-    $keyset = $keys.reduce |$memo, $entry| {
-      if User[$username] {
-        $key_name = $entry[0]
-        $key = $entry[1]
-        $key_subset = {
-          "${username}_${key_name}" => $key + {
-            user => $username,
-          },
-        }
-        if $memo =~ Hash {
-          $memo + $key_subset
-        } else {
-          $key_subset
-        }
-      } elsif $memo {
-        $memo
+  $keys_new = $users.map |$username| {
+    $keys.map |$key_name, $key| {
+      {
+        "${username}_${key_name}" => $key + {
+          user => $username,
+        },
+      }
+    }.reduce |$memo, $key| {
+      if $memo =~ Hash {
+        $memo + $key
       } else {
-        {}
+        $key
       }
     }
+  }.reduce |$memo, $key| {
     if $memo =~ Hash {
-      $memo + $keyset
+      $memo + $key
     } else {
-      $keyset
+      $key
     }
   }
+
   class { 'ssh':
     keys => $keys_new,
   }

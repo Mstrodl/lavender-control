@@ -1,0 +1,3 @@
+profile::ssh::users:
+  - mary
+  - root
