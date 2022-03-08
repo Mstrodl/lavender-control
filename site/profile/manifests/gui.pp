@@ -1,4 +1,4 @@
-class role::gui {
+class profile::gui {
   package { 'emacs':
     ensure => latest,
   }
