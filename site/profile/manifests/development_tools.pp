@@ -27,6 +27,9 @@ class profile::development_tools(
       ensure => present,
       content => Sensitive($wakatime_config),
     }
+    package { 'rustup':
+      ensure => latest,
+    }
   }
 
   file { '/home/mary/.eyaml/config.yaml':
