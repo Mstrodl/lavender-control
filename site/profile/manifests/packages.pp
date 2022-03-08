@@ -22,7 +22,7 @@ class profile::packages {
   if $::facts['os']['family'] == 'Archlinux' {
     class { 'pacman': }
     # AUR setup!
-    pacman::key { 'aur_coolmathgames_tech':
+    pacman::key { 'aur':
       keyid  => '0x4338A0E98FE8718EA718126FD8A8A0C4D0CE4C1E',
       source => 'puppet:///files/aur.coolmathgames.tech.asc',
     } -> pacman::repo { 'aur_coolmathgames_tech':
@@ -31,10 +31,19 @@ class profile::packages {
       order => '99',
     }
 
+    pacman::repo { 'dkp-libs':
+      server => 'https://downloads.devkitpro.org/packages',
+      order => '99',
+    }
+    pacman::repo { 'dkp-linux':
+      server => 'https://downloads.devkitpro.org/packages/linux/$arch',
+      order => '99',
+    }
+
     # Aur packages:
     package { 'saldl-git':
       ensure => latest,
-      require => Class['pacman::repo']['aur_coolmathgames_tech'],
+      # require => Class['pacman::repo']['aur'],
     }
   }
 }
