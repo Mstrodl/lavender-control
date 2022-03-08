@@ -26,7 +26,7 @@ class profile::packages {
       keyid => '0x4338A0E98FE8718EA718126FD8A8A0C4D0CE4C1E',
       url => 'https://aur.coolmathgames.tech/key.gpg',
     } -> pacman::repo { 'aur_coolmathgames_tech':
-      siglevel => 'required',
+      siglevel => 'Required',
       server => 'https://aur.coolmathgames.tech',
       order => '99',
     }
