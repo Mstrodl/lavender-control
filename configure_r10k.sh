@@ -1,5 +1,6 @@
 #!/bin/bash
 
+puppet module install puppetlabs-stdlib --version 8.1.0 --ignore-dependencies
 puppet module install puppetlabs-inifile --version 5.2.0 --ignore-dependencies
 puppet module install puppetlabs-vcsrepo --version 5.0.0 --ignore-dependencies
 puppet module install choria-mcollective --version 0.14.1 --ignore-dependencies
