@@ -1,0 +1,2 @@
+ssh::service_enable: false
+ssh::service_ensure: stopped
