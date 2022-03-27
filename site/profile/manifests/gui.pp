@@ -45,4 +45,7 @@ class profile::gui {
   package { 'xournalpp':
     ensure => latest,
   }
+  package { 'insect':
+    ensure => latest,
+  }
 }
