@@ -1,6 +1,13 @@
 class profile::user(
   String $password
 ) {
+  # Hack:
+  group { 'libvirt': }
+  group { 'docker': }
+  group { 'plugdev': }
+  group { 'wireshark': }
+  group { 'bumblebee': }
+
   user { 'mary':
     ensure => present,
     comment => 'Mary Strodl',
