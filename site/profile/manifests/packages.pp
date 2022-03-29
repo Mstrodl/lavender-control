@@ -19,6 +19,9 @@ class profile::packages {
   package { 'curl':
     ensure => latest,
   }
+  package { 'htop':
+    ensure => latest,
+  }
   if $::facts['os']['family'] == 'Archlinux' {
     class { 'pacman': }
     pacman::repo { 'multilib':
@@ -42,6 +45,10 @@ class profile::packages {
     pacman::repo { 'dkp-linux':
       server => 'https://downloads.devkitpro.org/packages/linux/$arch',
       order => '99',
+    }
+
+    package { 'croc':
+      ensure => latest,
     }
 
     # Aur packages:
