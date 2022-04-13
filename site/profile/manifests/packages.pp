@@ -22,6 +22,9 @@ class profile::packages {
   package { 'htop':
     ensure => latest,
   }
+  package { 'ripgrep':
+    ensure => latest,
+  }
   if $::facts['os']['family'] == 'Archlinux' {
     class { 'pacman': }
     pacman::repo { 'multilib':
