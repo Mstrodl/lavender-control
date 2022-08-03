@@ -7,6 +7,7 @@ hierarchy:
     lookup_key: eyaml_lookup_key
     paths:
       - "secrets/nodes/%{trusted.certname}.eyaml"
+      - "secrets/organization/%{::organization}/common.eyaml"
       - "secrets/location/%{::location}/%{::group}.eyaml"
       - "secrets/location/%{::location}/common.eyaml"
       - "secrets/groups/%{::group}/%{::subgroup}.eyaml"
