@@ -59,5 +59,9 @@ class profile::packages {
       ensure => latest,
       # require => Class['pacman::repo']['aur'],
     }
+
+    package { 'yay':
+      ensure => latest,
+    }
   }
 }
