@@ -11,6 +11,12 @@ class profile::development_tools(
   package { 'cmake':
     ensure => latest,
   }
+  package { 'jq':
+    ensure => latest,
+  }
+  package { 'man-db':
+    ensure => latest,
+  }
   class { 'nodejs':
     # This should be auto-updated
     repo_url_suffix => '17.x',
@@ -29,6 +35,9 @@ class profile::development_tools(
       content => Sensitive($wakatime_config),
     }
     package { 'rustup':
+      ensure => latest,
+    }
+    package { 'prettier':
       ensure => latest,
     }
   }

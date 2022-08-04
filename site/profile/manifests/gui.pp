@@ -48,4 +48,20 @@ class profile::gui {
   package { 'insect':
     ensure => latest,
   }
+
+  if $::facts['os']['family'] == 'Archlinux' and $::organization == 'work' {
+    package { 'slack-desktop':
+      # Slack is really buggy :/
+      ensure => installed,
+    }
+    package { 'openvpn3':
+      ensure => latest,
+    }
+  }
+  package { 'peek':
+    ensure => latest,
+  }
+  package { 'pavucontrol':
+    ensure => installed,
+  }
 }
