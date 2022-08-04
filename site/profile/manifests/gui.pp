@@ -57,6 +57,10 @@ class profile::gui {
     package { 'openvpn3':
       ensure => latest,
     }
+    # I blame @erwijet
+    package { 'visual-studio-code-bin':
+      ensure => latest,
+    }
   }
   package { 'peek':
     ensure => latest,
