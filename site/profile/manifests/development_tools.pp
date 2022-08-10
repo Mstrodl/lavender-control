@@ -11,8 +11,11 @@ class profile::development_tools(
   package { 'cmake':
     ensure => latest,
   }
-  package { 'jq':
+  package { 'jq-git':
     ensure => latest,
+  }
+  package { 'jq':
+    ensure => uninstalled,
   }
   package { 'man-db':
     ensure => latest,
