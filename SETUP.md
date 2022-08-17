@@ -212,6 +212,39 @@ git push origin --delete newfeature
 
 Quite honestly though, usually I just push to `production` and revert if necessary.
 
+## How do we store secrets?
+
+I want to store secrets in git, so I have to encrypt stuff using eyaml!
+Eyaml is yaml, but the values are encrypted.
+
+On the puppet master, install eyaml:
+```
+apt install hiera-eyaml
+```
+
+Now we can create the keys used to encrypt values:
+```
+cd /etc/puppetlabs/puppet
+eyaml createkeys
+mv keys eyaml
+```
+
+Copy the contents of `/etc/puppetlabs/puppet/eyaml/public_key.pkcs7.pem` into the `eyaml_public_key` field in `data/common.yaml`
+
+Now, let's see if it works: let's encrypt a password!
+```
+eyaml encrypt --pkcs7-public-key /etc/puppetlabs/puppet/eyaml/public_key.pkcs7.pem --label profile::user::password --password
+```
+Type the password and you should get some helpful eyaml snippets you can try in `data/secrets/common.eyaml`!
+
+Here are some helpful options:
+
+ * `--label` indicates the key value in the yaml file
+ * `--password` means mask the input so it doesn't appear on-screen
+ * `--file FILE` means use the contents of the provided file, `FILE` as the value to be encrypted
+
+Check the help information for `eyaml encrypt` for more information, like how to encrypt files!
+
 ## Troubleshooting
 
 ### Puppet executable not found :(
