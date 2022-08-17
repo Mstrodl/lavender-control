@@ -11,11 +11,14 @@ class profile::development_tools(
   package { 'cmake':
     ensure => latest,
   }
-  package { 'jq-git':
-    ensure => latest,
-  }
-  package { 'jq':
-    ensure => uninstalled,
+  if $::facts['os']['family'] == 'Archlinux' {
+    package { 'jq-git':
+      ensure => latest,
+    }
+  } else {
+    package { 'jq':
+      ensure => latest,
+    }
   }
   package { 'man-db':
     ensure => latest,
