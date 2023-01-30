@@ -1,5 +1,7 @@
-class profile::base {
-  class { '::ntp': }
+class profile::base($manage_ntp = true) {
+  if $manage_ntp {
+    class { '::ntp': }
+  }
 
   # Arch manages puppet in the repos
   if $::facts['os']['family'] == "Archlinux" {
